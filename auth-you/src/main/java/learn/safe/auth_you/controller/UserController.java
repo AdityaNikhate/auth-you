@@ -1,6 +1,7 @@
 package learn.safe.auth_you.controller;
 
 
+import jakarta.validation.Valid;
 import learn.safe.auth_you.io.ProfileRequest;
 import learn.safe.auth_you.io.ProfileResponse;
 import learn.safe.auth_you.service.ProfileService;
@@ -17,7 +18,7 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProfileResponse register(@RequestBody ProfileRequest profileRequest){
+    public ProfileResponse register(@Valid @RequestBody ProfileRequest profileRequest){
         ProfileResponse profileResponse = profileService.createProfile(profileRequest);
         //TODO: send welcome email for the register email
         return profileResponse;
