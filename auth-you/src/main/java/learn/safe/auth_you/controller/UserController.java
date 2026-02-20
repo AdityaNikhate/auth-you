@@ -22,4 +22,9 @@ public class UserController {
         //TODO: send welcome email for the register email
         return profileResponse;
     }
+
+    @GetMapping("/authtest")
+    public String testAuth(){
+        return "Auth is working";
+    }
 }
