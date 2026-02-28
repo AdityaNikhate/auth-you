@@ -8,6 +8,7 @@ import learn.safe.auth_you.service.ProfileService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +22,11 @@ public class UserController {
         ProfileResponse profileResponse = profileService.createProfile(profileRequest);
         //TODO: send welcome email for the register email
         return profileResponse;
+    }
+
+    @PostMapping("/profile")
+    public ProfileResponse getProfile(@CurrentSecurityContext(expression = "authentication?.name") String email){
+        return profileService.getProfile(email);
     }
 
     @GetMapping("/authtest")
