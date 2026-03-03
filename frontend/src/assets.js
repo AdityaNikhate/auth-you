@@ -1,5 +1,10 @@
-import logo from './assets/react.svg'
+import logo from './assets/logo.png'
+import favicon from './assets/favicon.png'
+import banner from './assets/banner.png'
+
 
 export const assets ={
-    logo
+    logo,
+    favicon,
+    banner
 }
