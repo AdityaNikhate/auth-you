@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
@@ -11,8 +11,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const {backendUrl, setUserData} = useContext(AppContext);
+  const {backendUrl, setUserData, setIsLoggedIn, getUserData, userData} = useContext(AppContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+  console.log("Updated userData:", userData);
+}, [userData]);
 
   const onSubmitHandler = async (e)=>{
     e.preventDefault();
@@ -30,6 +34,18 @@ const Login = () => {
         }
       }else{
         // login API
+        const response = await axios.post(`${backendUrl}/login`,{email, password})
+        if(response.status === 200){
+          console.log(response)
+          navigate("/")
+          setUserData(true)
+          await getUserData()
+          console.log("Data Got",userData)
+          toast.success("User logedin")
+          setIsLoggedIn(true)
+        }else{
+          toast.error("Login failed")
+        }
       }
     } catch (error) {
       toast.error("Fail submitting information.")
